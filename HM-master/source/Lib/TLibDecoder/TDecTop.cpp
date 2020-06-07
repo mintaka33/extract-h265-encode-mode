@@ -766,6 +766,13 @@ Bool TDecTop::xDecodeSlice(InputNALUnit &nalu, Int &iSkipFrame, Int iPOCLastDisp
     m_cTrQuant.setUseScalingList(false);
   }
 
+  printf("mvinfo:POC=%d:pic_w=%d:pic_h=%d:ctu_w=%d:ctu_h=%d\n", 
+    pcSlice->getPOC(), 
+    pcSlice->getSPS()->getPicWidthInLumaSamples(),
+    pcSlice->getSPS()->getPicHeightInLumaSamples(),
+    pcSlice->getSPS()->getMaxCUWidth(),
+    pcSlice->getSPS()->getMaxCUHeight());
+
   //  Decode a picture
   m_cGopDecoder.decompressSlice(&(nalu.getBitstream()), m_pcPic);
 

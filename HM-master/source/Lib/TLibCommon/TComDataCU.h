@@ -63,7 +63,7 @@ static const UInt NUM_MOST_PROBABLE_MODES=3;
 /// CU data structure class
 class TComDataCU
 {
-private:
+public:
 
   // -------------------------------------------------------------------------------------------------------------------
   // class pointers

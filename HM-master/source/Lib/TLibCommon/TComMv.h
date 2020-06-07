@@ -50,7 +50,7 @@
 /// basic motion vector class
 class TComMv
 {
-private:
+public:
   Short m_iHor;     ///< horizontal component of motion vector
   Short m_iVer;     ///< vertical component of motion vector
 

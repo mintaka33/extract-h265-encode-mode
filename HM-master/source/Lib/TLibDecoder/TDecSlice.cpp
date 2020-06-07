@@ -68,6 +68,22 @@ Void TDecSlice::init(TDecEntropy* pcEntropyDecoder, TDecCu* pcCuDecoder, TDecCon
   m_pDecConformanceCheck = pDecConformanceCheck;
 }
 
+// mvinfo
+void printinfo(UChar* data, int row, int col, const char* tag)
+{
+    UChar val = 0;
+    printf("mvinfo:%s:%d:%d:", tag, row, col);
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            val = data[i*col + j];
+            printf("%02d,", val);
+        }
+    }
+    printf("\n");
+}
+
 Void TDecSlice::decompressSlice(TComInputBitstream** ppcSubstreams, TComPic* pcPic, TDecSbac* pcSbacDecoder)
 {
   TComSlice* pcSlice                 = pcPic->getSlice(pcPic->getCurrSliceIdx());
@@ -222,6 +238,21 @@ Void TDecSlice::decompressSlice(TComInputBitstream** ppcSubstreams, TComPic* pcP
 #endif
 
     m_pcCuDecoder->decompressCtu ( pCtu );
+
+    printf("mvinfo:ctu_x=%d:ctu_y=%d\n", ctuXPosInCtus, ctuYPosInCtus);
+    printinfo((UChar*)pCtu->m_skipFlag, 16, 16, "skipflag");
+    char zeroMvFlag[256] = {};
+    for (size_t i = 0; i < 256; i++)
+    {
+        if ((!pCtu->m_acCUMvField[0].m_pcMv[i].m_iHor) && 
+            (!pCtu->m_acCUMvField[0].m_pcMv[i].m_iVer) &&
+            (!pCtu->m_acCUMvField[1].m_pcMv[i].m_iHor) &&
+            (!pCtu->m_acCUMvField[1].m_pcMv[i].m_iVer))
+        {
+            zeroMvFlag[i] = 1;
+        }
+    }
+    printinfo((UChar*)zeroMvFlag, 16, 16, "zeromvflag");
 
 #if ENC_DEC_TRACE
     g_bJustDoIt = g_bEncDecTraceDisable;

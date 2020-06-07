@@ -93,7 +93,7 @@ public:
 /// class for motion information in one CU
 class TComCUMvField
 {
-private:
+public:
   TComMv*   m_pcMv;
   TComMv*   m_pcMvd;
   SChar*    m_piRefIdx;
