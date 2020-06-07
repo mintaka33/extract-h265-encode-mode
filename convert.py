@@ -3,14 +3,11 @@ import cv2
 import sys
 
 def gen_reorder_map():
-    x = np.array([[0, 1], [2, 3]])
-    a = x
+    a = np.array([[0, 1], [2, 3]])
     a1 = np.column_stack((a, a+4))
-    a2 = np.row_stack((a1, a1+8))
-    b = a2
+    b = np.row_stack((a1, a1+8))
     b1 = np.column_stack((b, b+16))
-    b2 = np.row_stack((b1, b1+32))
-    c = b2
+    c = np.row_stack((b1, b1+32))
     c1 = np.column_stack((c, c+64))
     c2 = np.row_stack((c1, c1+128))
     h, w = c2.shape
