@@ -1,5 +1,5 @@
 # extract-h265-encode-mode
-Extract video encoding information like motion vector, skip mode, CU/PU/TU partitions from H.265/HEVC stream
+Extract video encoding info (like motion vector, skip mode, CU/PU/TU partitions) from H.265/HEVC stream
 
 ## Build HM
 
