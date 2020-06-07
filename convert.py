@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import sys
 
-def gen_scanmap():
+def gen_reorder_map():
     x = np.array([[0, 1], [2, 3]])
     a = x
     a1 = np.column_stack((a, a+4))
@@ -16,15 +16,15 @@ def gen_scanmap():
     h, w = c2.shape
     return c2.reshape((h*w))
 
-def reorder(indata, scanmap):
+def reorder(indata, reorder_map):
     sz = indata.shape[0]
     out = np.zeros((sz))
     for i in range(sz):
-        out[i] = indata[scanmap[i]]
+        out[i] = indata[reorder_map[i]]
     return out
 
 def parse_dump(dumpfile):
-    scanmap = gen_scanmap()
+    reorder_map = gen_reorder_map()
     with open(dumpfile, "rt") as f:
         row_skipflg, row_zeromv, frame_skipflag, frame_zeromv = [], [], [], []
         cur_row = 0
@@ -55,7 +55,7 @@ def parse_dump(dumpfile):
                 w, h = int(w_str), int(h_str)
                 data_str = data_str.split(',')
                 data_int = np.array(data_str[0:w*h]).astype(np.int8)
-                data_reorder = reorder(data_int, scanmap)
+                data_reorder = reorder(data_int, reorder_map)
                 data = data_reorder.reshape((w, h))
                 row_skipflg.append(data)
             elif line.find('mvinfo:zeromvflag') != -1:
@@ -63,7 +63,7 @@ def parse_dump(dumpfile):
                 w, h = int(w_str), int(h_str)
                 data_str = data_str.split(',')
                 data_int = np.array(data_str[0:w*h]).astype(np.int8)
-                data_reorder = reorder(data_int, scanmap)
+                data_reorder = reorder(data_int, reorder_map)
                 data = data_reorder.reshape((w, h))
                 row_zeromv.append(data)
         # last frame
