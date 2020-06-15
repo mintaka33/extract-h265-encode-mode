@@ -20,7 +20,7 @@ def reorder(indata, reorder_map):
         out[i] = indata[reorder_map[i]]
     return out
 
-def parse_dump(dumpfile):
+def parse_dump(dumpfile, skipflag_data, zeromv_data):
     reorder_map = gen_reorder_map()
     with open(dumpfile, "rt") as f:
         row_skipflg, row_zeromv, frame_skipflag, frame_zeromv = [], [], [], []
@@ -89,17 +89,18 @@ def generate_maps(data):
 
 def dump_maps(data, tag):
     for i, frame in enumerate(data):
-        filename = 'out_' + tag + '_' + str(i)
+        filename = 'out_' + tag + '_' + str(i+1)
         txtfile = filename + '.txt'
         np.savetxt(txtfile, frame, fmt='%d')
-        pic = frame * 256
-        bmpfile = filename + '.bmp'
-        cv2.imwrite(bmpfile, pic)
+        if False:
+            pic = frame * 256
+            bmpfile = filename + '.bmp'
+            cv2.imwrite(bmpfile, pic)
 
 def execute(dumpfile):
     skipflag_data = []
     zeromv_data = []
-    parse_dump(dumpfile)
+    parse_dump(dumpfile, skipflag_data, zeromv_data)
 
     skip_maps = generate_maps(skipflag_data)
     zeromv_maps = generate_maps(zeromv_data)
@@ -108,8 +109,8 @@ def execute(dumpfile):
         zm = skip_maps[i] * zeromv_maps[i]
         zeromv_skip_maps.append(zm)
 
-    dump_maps(skip_maps, 'skip')
-    dump_maps(zeromv_maps, 'zeromv')
+    #dump_maps(skip_maps, 'skip')
+    #dump_maps(zeromv_maps, 'zeromv')
     dump_maps(zeromv_skip_maps, 'zeromv_skip')
 
 if __name__ == "__main__":
