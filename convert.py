@@ -96,13 +96,7 @@ def dump_maps(data, tag):
         bmpfile = filename + '.bmp'
         cv2.imwrite(bmpfile, pic)
 
-if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        dumpfile = sys.argv[1]
-    else:
-        print("ERROR: invalid command line. example: python convert.py dump_file.log")
-        exit()
-
+def execute(dumpfile):
     skipflag_data = []
     zeromv_data = []
     parse_dump(dumpfile)
@@ -117,5 +111,14 @@ if __name__ == "__main__":
     dump_maps(skip_maps, 'skip')
     dump_maps(zeromv_maps, 'zeromv')
     dump_maps(zeromv_skip_maps, 'zeromv_skip')
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        dumpfile = sys.argv[1]
+    else:
+        print("ERROR: invalid command line. example: python convert.py dump_file.log")
+        exit()
+
+    execute(dumpfile)
 
     print('done')
