@@ -16,3 +16,8 @@ dump.log
 *.opendb
 *.db-shm
 *.db-wal
+*.ipch
+*.yuv
+*.264
+log.dec
+

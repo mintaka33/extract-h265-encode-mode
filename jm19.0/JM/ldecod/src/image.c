@@ -814,7 +814,7 @@ int decode_one_frame(DecoderParams *pDecoder)
   Slice *currSlice; // = p_Vid->currentSlice;
   Slice **ppSliceList = p_Vid->ppSliceList;
   int iSliceNo;
-  
+
   //read one picture first;
   p_Vid->iSliceNumOfCurrPic=0;
   current_header=0;
@@ -2508,7 +2508,7 @@ void decode_one_slice(Slice *currSlice)
     init_cur_imgy(currSlice,p_Vid); 
 
   //reset_ec_flags(p_Vid);
-
+  printf("skipflag: ");
   while (end_of_slice == FALSE) // loop over macroblocks
   {
 
@@ -2522,6 +2522,8 @@ void decode_one_slice(Slice *currSlice)
     currSlice->read_one_macroblock(currMB);
     decode_one_macroblock(currMB, currSlice->dec_picture);
 
+    printf("%d, ", currMB->skip_flag);
+
     if(currSlice->mb_aff_frame_flag && currMB->mb_field)
     {
       currSlice->num_ref_idx_active[LIST_0] >>= 1;
@@ -2534,6 +2536,7 @@ void decode_one_slice(Slice *currSlice)
 
     end_of_slice = exit_macroblock(currSlice, (!currSlice->mb_aff_frame_flag|| currSlice->current_mb_nr%2));
   }
+  printf("\n");
   //reset_ec_flags(p_Vid);
 }
 
