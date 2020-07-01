@@ -58,8 +58,8 @@ def calc_skip_zeromv(skipflag, zeromv):
 def execute(dumpfile):
     w, h = get_size(dumpfile)
     skipflag, zeromv = parse_dump(dumpfile, w, h)
-    dump_to_file(skipflag, 'skip')
-    dump_to_file(zeromv, 'mvinfo')
+    #dump_to_file(skipflag, 'skip')
+    #dump_to_file(zeromv, 'mvinfo')
     skip_zeromv = calc_skip_zeromv(skipflag, zeromv)
     dump_to_file(skip_zeromv, 'skip_zeromv')
     return
