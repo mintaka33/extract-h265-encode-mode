@@ -950,6 +950,29 @@ int decode_one_frame(DecoderParams *pDecoder)
 #if MVC_EXTENSION_ENABLE
   p_Vid->last_dec_view_id = p_Vid->dec_picture->view_id;
 #endif
+
+  // dump mvinfo
+  int i, j, mm, nn, zeromv;
+  int mb_width = p_Vid->dec_picture->PicWidthInMbs;
+  int mb_height = p_Vid->dec_picture->PicSizeInMbs / mb_width;
+  short l0[2], l1[2];
+  printf("\nmvinfo: ");
+  for (i = 0; i < mb_height * 4; i++)
+  {
+    mm = i * BLOCK_SIZE;
+    for (j = 0; j < mb_width * 4; j++)
+    {
+      nn = j * BLOCK_SIZE;
+      l0[0] = p_Vid->dec_picture->mv_info[i][j].mv[LIST_0].mv_x;
+      l0[1] = p_Vid->dec_picture->mv_info[i][j].mv[LIST_0].mv_y;
+      l1[0] = p_Vid->dec_picture->mv_info[i][j].mv[LIST_1].mv_x;
+      l1[1] = p_Vid->dec_picture->mv_info[i][j].mv[LIST_1].mv_y;
+      zeromv = (l0[0] == 0 && l0[1] == 0 && l1[0] == 0 && l1[1]== 0) ? 1: 0;
+      printf("%d, ", zeromv);
+      //printf("[%d, %d, %d, %d], ", l0[0], l0[1], l1[0], l1[1]);
+    }
+  }
+  printf("\n");
   if(p_Vid->dec_picture->structure == FRAME)
     p_Vid->last_dec_poc = p_Vid->dec_picture->frame_poc;
   else if(p_Vid->dec_picture->structure == TOP_FIELD)
