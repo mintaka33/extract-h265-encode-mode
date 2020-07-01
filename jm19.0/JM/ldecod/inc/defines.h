@@ -24,7 +24,7 @@
 #undef TRACE
 #endif
 #if defined _DEBUG
-# define TRACE           1     //!< 0:Trace off 1:Trace on 2:detailed CABAC context information
+# define TRACE           0     //!< 0:Trace off 1:Trace on 2:detailed CABAC context information
 #else
 # define TRACE           0     //!< 0:Trace off 1:Trace on 2:detailed CABAC context information
 #endif
