@@ -8,7 +8,7 @@ def get_size(dumpfile):
     with open(dumpfile, "rt") as f:
         for line in f:
             if tag in line:
-                s = line.split(tag)[1].split(' (')[0]
+                s = line.split(tag)[1].split(' (')[1].split(')')[0]
                 s1, s2 = s.split('x')
                 w, h = int(s1), int(s2)
                 break
