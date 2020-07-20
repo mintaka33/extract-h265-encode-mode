@@ -2545,7 +2545,8 @@ void decode_one_slice(Slice *currSlice)
     currSlice->read_one_macroblock(currMB);
     decode_one_macroblock(currMB, currSlice->dec_picture);
 
-    printf("%d, ", currMB->skip_flag);
+    char skipflag = (currSlice->slice_type == I_SLICE) ? 0 : currMB->skip_flag;
+    printf("%d, ", skipflag);
 
     if(currSlice->mb_aff_frame_flag && currMB->mb_field)
     {
